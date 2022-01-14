@@ -102,7 +102,7 @@ resource "tfe_workspace" "production" {
   terraform_version = "1.1.2"
 
   vcs_repo {
-    branch         = "master"
+    branch         = "main"
     identifier     = var.vcs_identifier
     oauth_token_id = var.oauth_token
   }
