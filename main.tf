@@ -108,50 +108,50 @@ resource "tfe_workspace" "production" {
   }
 }
 
-resource "tfe_variable" "staging_aws_access_key" {
-  key          = "AWS_ACCESS_KEY_ID"
-  value        = var.aws_access_key
-  category     = "env"
-  workspace_id = tfe_workspace.staging.id
-}
+// resource "tfe_variable" "staging_aws_access_key" {
+//   key          = "AWS_ACCESS_KEY_ID"
+//   value        = var.aws_access_key
+//   category     = "env"
+//   workspace_id = tfe_workspace.staging.id
+// }
 
-resource "tfe_variable" "development_aws_access_key" {
-  key          = "AWS_ACCESS_KEY_ID"
-  value        = var.aws_access_key
-  category     = "env"
-  workspace_id = tfe_workspace.development.id
-}
+// resource "tfe_variable" "development_aws_access_key" {
+//   key          = "AWS_ACCESS_KEY_ID"
+//   value        = var.aws_access_key
+//   category     = "env"
+//   workspace_id = tfe_workspace.development.id
+// }
 
-resource "tfe_variable" "production_aws_access_key" {
-  key          = "AWS_ACCESS_KEY_ID"
-  value        = var.aws_access_key
-  category     = "env"
-  workspace_id = tfe_workspace.production.id
-}
+// resource "tfe_variable" "production_aws_access_key" {
+//   key          = "AWS_ACCESS_KEY_ID"
+//   value        = var.aws_access_key
+//   category     = "env"
+//   workspace_id = tfe_workspace.production.id
+// }
 
-resource "tfe_variable" "staging_aws_secret_key" {
-  key          = "AWS_SECRET_ACCESS_KEY"
-  value        = var.aws_secret_key
-  category     = "env"
-  sensitive    = "true"
-  workspace_id = tfe_workspace.staging.id
-}
+// resource "tfe_variable" "staging_aws_secret_key" {
+//   key          = "AWS_SECRET_ACCESS_KEY"
+//   value        = var.aws_secret_key
+//   category     = "env"
+//   sensitive    = "true"
+//   workspace_id = tfe_workspace.staging.id
+// }
 
-resource "tfe_variable" "development_aws_secret_key" {
-  key          = "AWS_SECRET_ACCESS_KEY"
-  value        = var.aws_secret_key
-  category     = "env"
-  sensitive    = "true"
-  workspace_id = tfe_workspace.development.id
-}
+// resource "tfe_variable" "development_aws_secret_key" {
+//   key          = "AWS_SECRET_ACCESS_KEY"
+//   value        = var.aws_secret_key
+//   category     = "env"
+//   sensitive    = "true"
+//   workspace_id = tfe_workspace.development.id
+// }
 
-resource "tfe_variable" "production_aws_secret_key" {
-  key          = "AWS_SECRET_ACCESS_KEY"
-  value        = var.aws_secret_key
-  category     = "env"
-  sensitive    = "true"
-  workspace_id = tfe_workspace.production.id
-}
+// resource "tfe_variable" "production_aws_secret_key" {
+//   key          = "AWS_SECRET_ACCESS_KEY"
+//   value        = var.aws_secret_key
+//   category     = "env"
+//   sensitive    = "true"
+//   workspace_id = tfe_workspace.production.id
+// }
 
 resource "tfe_variable" "workspace_var_staging" {
   key      = "workspace_name"
