@@ -17,10 +17,6 @@ variable "owner" {
   description = "owner to pass to owner tag"
 }
 
-variable "token" {
-  description = "TFE User Token"
-}
-
 variable "ttl" {
   description = "Hours until instances are reaped by N.E.P.T.R"
   default     = "1"
@@ -38,4 +34,15 @@ locals {
     ttl       = var.ttl #hours
     terraform = "true"  # true/false
   }
+}
+
+# in development
+variable "enable_azure" {
+  description = "Provision Azure"
+  default     = false
+}
+
+variable "enable_gcp" {
+  description = "Provision GCP"
+  default     = false
 }

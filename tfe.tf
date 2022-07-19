@@ -1,6 +1,5 @@
 provider "tfe" {
   hostname = var.hostname
-  token    = var.token
 }
 
 resource "tfe_organization_membership" "developers" {
