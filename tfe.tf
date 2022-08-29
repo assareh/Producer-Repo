@@ -68,6 +68,20 @@ resource "tfe_team_access" "development-ops" {
   workspace_id = tfe_workspace.development.id
 }
 
+resource "tfe_workspace" "development1" {
+  name              = "${var.use_case_name}-development1"
+  organization      = var.org
+  auto_apply        = true
+  queue_all_runs    = false
+  terraform_version = "1.1.2"
+
+  vcs_repo {
+    branch         = "development"
+    identifier     = var.vcs_identifier
+    oauth_token_id = var.oauth_token
+  }
+}
+
 resource "tfe_workspace" "development" {
   name              = "${var.use_case_name}-development"
   organization      = var.org
