@@ -292,7 +292,7 @@ resource "tfe_team_token" "app" {
 
 resource "tfe_team_access" "app-control" {
   team_id      = tfe_team.app.id
-  workspace_id = data.tfe_workspace.this
+  workspace_id = data.tfe_workspace.this.id
 
   permissions {
     runs              = "read"
