@@ -273,3 +273,26 @@ resource "tfe_variable" "name_prod" {
   category     = "terraform"
   workspace_id = tfe_workspace.production.id
 }
+
+data "tfe_team" "github-actions" {
+  name         = "github-actions"
+  organization = var.org
+}
+
+resource "tfe_team_access" "development-github" {
+  access       = "write"
+  team_id      = data.tfe_team.github-actions.id
+  workspace_id = tfe_workspace.development.id
+}
+
+resource "tfe_team_access" "staging-github" {
+  access       = "write"
+  team_id      = data.tfe_team.github-actions.id
+  workspace_id = tfe_workspace.staging.id
+}
+
+resource "tfe_team_access" "production-github" {
+  access       = "write"
+  team_id      = data.tfe_team.github-actions.id
+  workspace_id = tfe_workspace.production.id
+}
