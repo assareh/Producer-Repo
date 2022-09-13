@@ -81,7 +81,7 @@ resource "tfe_workspace" "development" {
   terraform_version = "1.1.2"
   tag_names         = [var.use_case_name]
   execution_mode    = "agent"
-  agent_pool_id     = tfe_agent_pool.aws.id
+  agent_pool_id     = data.tfe_agent_pool.aws.id
 
   # vcs_repo {
   #   branch         = "development"
@@ -97,7 +97,7 @@ resource "tfe_workspace" "staging" {
   terraform_version = "1.1.2"
   tag_names         = [var.use_case_name]
   execution_mode    = "agent"
-  agent_pool_id     = tfe_agent_pool.aws.id
+  agent_pool_id     = data.tfe_agent_pool.aws.id
 
   # vcs_repo {
   #   branch         = "staging"
@@ -112,7 +112,7 @@ resource "tfe_workspace" "production" {
   terraform_version = "1.1.2"
   tag_names         = [var.use_case_name]
   execution_mode    = "agent"
-  agent_pool_id     = tfe_agent_pool.aws.id
+  agent_pool_id     = data.tfe_agent_pool.aws.id
 
   # vcs_repo {
   #   branch         = "main"
