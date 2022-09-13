@@ -7,6 +7,11 @@ data "tfe_agent_pool" "aws" {
   organization = var.org
 }
 
+data "tfe_workspace" "this" {
+  name         = local.my_workspace_env
+  organization = var.org
+}
+
 # resource "tfe_organization_membership" "developers" {
 #   organization = var.org
 #   email        = "assareh+developer@hashicorp.com"
@@ -287,7 +292,7 @@ resource "tfe_team_token" "app" {
 
 resource "tfe_team_access" "app-control" {
   team_id      = tfe_team.app.id
-  workspace_id = tfe_workspace.development.id
+  workspace_id = data.tfe_workspace.this
 
   permissions {
     runs              = "read"
