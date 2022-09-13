@@ -1,3 +1,7 @@
+variable "agent_pool_name" {
+  description = "name of agent pool to use"
+}
+
 variable "aws_region" {
   description = "region to deploy resources in"
   default     = "us-west-2"

@@ -2,6 +2,11 @@ provider "tfe" {
   hostname = var.hostname
 }
 
+data "tfe_agent_pool" "aws" {
+  name         = var.agent_pool_name
+  organization = var.org
+}
+
 resource "tfe_organization_membership" "developers" {
   organization = var.org
   email        = "assareh+developer@hashicorp.com"
@@ -74,12 +79,15 @@ resource "tfe_workspace" "development" {
   auto_apply        = true
   queue_all_runs    = false
   terraform_version = "1.1.2"
+  tag_names         = [var.use_case_name]
+  execution_mode    = "agent"
+  agent_pool_id     = tfe_agent_pool.aws.id
 
-  vcs_repo {
-    branch         = "development"
-    identifier     = var.vcs_identifier
-    oauth_token_id = var.oauth_token
-  }
+  # vcs_repo {
+  #   branch         = "development"
+  #   identifier     = var.vcs_identifier
+  #   oauth_token_id = var.oauth_token
+  # }
 }
 
 resource "tfe_workspace" "staging" {
@@ -87,24 +95,30 @@ resource "tfe_workspace" "staging" {
   organization      = var.org
   auto_apply        = true
   terraform_version = "1.1.2"
+  tag_names         = [var.use_case_name]
+  execution_mode    = "agent"
+  agent_pool_id     = tfe_agent_pool.aws.id
 
-  vcs_repo {
-    branch         = "staging"
-    identifier     = var.vcs_identifier
-    oauth_token_id = var.oauth_token
-  }
+  # vcs_repo {
+  #   branch         = "staging"
+  #   identifier     = var.vcs_identifier
+  #   oauth_token_id = var.oauth_token
+  # }
 }
 
 resource "tfe_workspace" "production" {
   name              = "${var.use_case_name}-production"
   organization      = var.org
   terraform_version = "1.1.2"
+  tag_names         = [var.use_case_name]
+  execution_mode    = "agent"
+  agent_pool_id     = tfe_agent_pool.aws.id
 
-  vcs_repo {
-    branch         = "main"
-    identifier     = var.vcs_identifier
-    oauth_token_id = var.oauth_token
-  }
+  # vcs_repo {
+  #   branch         = "main"
+  #   identifier     = var.vcs_identifier
+  #   oauth_token_id = var.oauth_token
+  # }
 }
 
 // resource "tfe_variable" "staging_aws_access_key" {
