@@ -7,8 +7,6 @@ variable "aws_region" {
   default     = "us-west-2"
 }
 
-variable "creator_workspace" {}
-
 variable "hostname" {
   default = "app.terraform.io"
 }
@@ -30,6 +28,11 @@ variable "use_case_name" {}
 
 variable "vcs_identifier" {}
 
+variable "TFC_WORKSPACE_NAME" {
+  type    = string
+  default = "" # An error occurs when you are running TF backend other than Terraform Cloud
+}
+
 locals {
   common_tags = {
     owner     = var.owner
@@ -38,6 +41,10 @@ locals {
     ttl       = var.ttl #hours
     terraform = "true"  # true/false
   }
+
+  # If your backend is not Terraform Cloud, the value is ${terraform.workspace} 
+  # otherwise the value retrieved is that of the TFC_WORKSPACE_NAME with trimprefix
+  my_workspace_env = var.TFC_WORKSPACE_NAME != "" ? trimprefix("${var.TFC_WORKSPACE_NAME}", "my-workspace-") : "${terraform.workspace}"
 }
 
 # in development

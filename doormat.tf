@@ -1,7 +1,7 @@
-variable "TFC_WORKSPACE_NAME" {
-  type    = string
-  default = "" # An error occurs when you are running TF backend other than Terraform Cloud
-}
+# variable "TFC_WORKSPACE_NAME" {
+#   type    = string
+#   default = "" # An error occurs when you are running TF backend other than Terraform Cloud
+# }
 
 data "tfe_outputs" "doormat_role" {
   organization = "hashidemos"

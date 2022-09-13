@@ -121,80 +121,49 @@ resource "tfe_workspace" "production" {
   # }
 }
 
-// resource "tfe_variable" "staging_aws_access_key" {
-//   key          = "AWS_ACCESS_KEY_ID"
-//   value        = var.aws_access_key
-//   category     = "env"
-//   workspace_id = tfe_workspace.staging.id
-// }
-
-// resource "tfe_variable" "development_aws_access_key" {
-//   key          = "AWS_ACCESS_KEY_ID"
-//   value        = var.aws_access_key
-//   category     = "env"
-//   workspace_id = tfe_workspace.development.id
-// }
-
-// resource "tfe_variable" "production_aws_access_key" {
-//   key          = "AWS_ACCESS_KEY_ID"
-//   value        = var.aws_access_key
-//   category     = "env"
-//   workspace_id = tfe_workspace.production.id
-// }
-
-// resource "tfe_variable" "staging_aws_secret_key" {
-//   key          = "AWS_SECRET_ACCESS_KEY"
-//   value        = var.aws_secret_key
-//   category     = "env"
-//   sensitive    = "true"
-//   workspace_id = tfe_workspace.staging.id
-// }
-
-// resource "tfe_variable" "development_aws_secret_key" {
-//   key          = "AWS_SECRET_ACCESS_KEY"
-//   value        = var.aws_secret_key
-//   category     = "env"
-//   sensitive    = "true"
-//   workspace_id = tfe_workspace.development.id
-// }
-
-// resource "tfe_variable" "production_aws_secret_key" {
-//   key          = "AWS_SECRET_ACCESS_KEY"
-//   value        = var.aws_secret_key
-//   category     = "env"
-//   sensitive    = "true"
-//   workspace_id = tfe_workspace.production.id
-// }
-
 resource "tfe_variable" "workspace_var_staging" {
-  key      = "workspace_name"
-  value    = var.creator_workspace
-  category = "env"
+  key      = "control_workspace_workspace"
+  value    = local.my_workspace_env
+  category = "terraform"
 
   workspace_id = tfe_workspace.staging.id
 }
 
 resource "tfe_variable" "workspace_var_development" {
-  key      = "workspace_name"
-  value    = var.creator_workspace
-  category = "env"
+  key      = "control_workspace_workspace"
+  value    = local.my_workspace_env
+  category = "terraform"
 
   workspace_id = tfe_workspace.development.id
 }
 
 resource "tfe_variable" "workspace_var_production" {
-  key      = "workspace_name"
-  value    = var.creator_workspace
-  category = "env"
+  key      = "control_workspace_workspace"
+  value    = local.my_workspace_env
+  category = "terraform"
 
   workspace_id = tfe_workspace.production.id
 }
 
 resource "tfe_variable" "org_var_production" {
-  key          = "org"
+  key          = "control_workspace_organization"
   value        = var.org
-  category     = "env"
+  category     = "terraform"
   workspace_id = tfe_workspace.production.id
+}
+
+resource "tfe_variable" "org_var_development" {
+  key          = "control_workspace_organization"
+  value        = var.org
+  category     = "terraform"
+  workspace_id = tfe_workspace.development.id
+}
+
+resource "tfe_variable" "org_var_staging" {
+  key          = "control_workspace_organization"
+  value        = var.org
+  category     = "terraform"
+  workspace_id = tfe_workspace.staging.id
 }
 
 resource "tfe_variable" "set_ttl1" {
@@ -216,20 +185,6 @@ resource "tfe_variable" "set_ttl3" {
   value        = "30"
   category     = "env"
   workspace_id = tfe_workspace.production.id
-}
-
-resource "tfe_variable" "org_var_development" {
-  key          = "org"
-  value        = var.org
-  category     = "env"
-  workspace_id = tfe_workspace.development.id
-}
-
-resource "tfe_variable" "org_var_staging" {
-  key          = "org"
-  value        = var.org
-  category     = "env"
-  workspace_id = tfe_workspace.staging.id
 }
 
 resource "tfe_variable" "environment_name_dev" {
@@ -295,4 +250,51 @@ resource "tfe_team_access" "production-github" {
   access       = "write"
   team_id      = data.tfe_team.github-actions.id
   workspace_id = tfe_workspace.production.id
+}
+
+resource "tfe_variable" "tfe_token_dev" {
+  key          = "TFE_TOKEN"
+  value        = tfe_team_token.app.token
+  category     = "env"
+  sensitive    = true
+  workspace_id = tfe_workspace.development.id
+}
+
+resource "tfe_variable" "tfe_token_stage" {
+  key          = "TFE_TOKEN"
+  value        = tfe_team_token.app.token
+  category     = "env"
+  sensitive    = true
+  workspace_id = tfe_workspace.staging.id
+}
+
+resource "tfe_variable" "tfe_token_prod" {
+  key          = "TFE_TOKEN"
+  value        = tfe_team_token.app.token
+  category     = "env"
+  sensitive    = true
+  workspace_id = tfe_workspace.production.id
+}
+
+resource "tfe_team" "app" {
+  name         = var.use_case_name
+  organization = var.org
+}
+
+resource "tfe_team_token" "app" {
+  team_id = tfe_team.app.id
+}
+
+resource "tfe_team_access" "app-control" {
+  team_id      = tfe_team.app.id
+  workspace_id = tfe_workspace.development.id
+
+  permissions {
+    runs              = "read"
+    run_tasks         = false
+    sentinel_mocks    = "none"
+    state_versions    = "read-outputs"
+    variables         = "none"
+    workspace_locking = false
+  }
 }
