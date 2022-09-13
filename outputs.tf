@@ -21,3 +21,11 @@ output "region" {
 output "staging_subnet_id" {
   value = aws_subnet.staging.id
 }
+
+output "subnets" {
+  value = {
+    dev = aws_subnet.development.id
+    stg = aws_subnet.staging.id
+    prd = aws_subnet.production.id
+  }
+}

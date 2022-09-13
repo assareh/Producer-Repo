@@ -190,21 +190,21 @@ resource "tfe_variable" "set_ttl3" {
 resource "tfe_variable" "environment_name_dev" {
   key          = "environment"
   value        = "dev"
-  category     = "env"
+  category     = "terraform"
   workspace_id = tfe_workspace.development.id
 }
 
 resource "tfe_variable" "environment_name_stage" {
   key          = "environment"
-  value        = "stage"
-  category     = "env"
+  value        = "stg"
+  category     = "terraform"
   workspace_id = tfe_workspace.staging.id
 }
 
 resource "tfe_variable" "environment_name_prod" {
   key          = "environment"
-  value        = "prod"
-  category     = "env"
+  value        = "prd"
+  category     = "terraform"
   workspace_id = tfe_workspace.production.id
 }
 
