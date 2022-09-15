@@ -324,3 +324,24 @@ resource "tfe_variable" "role_arn_prod" {
   category     = "terraform"
   workspace_id = tfe_workspace.production.id
 }
+
+resource "tfe_variable" "aws_region_dev" {
+  key          = "aws_region"
+  value        = var.aws_region
+  category     = "terraform"
+  workspace_id = tfe_workspace.development.id
+}
+
+resource "tfe_variable" "aws_region_stage" {
+  key          = "aws_region"
+  value        = var.aws_region
+  category     = "terraform"
+  workspace_id = tfe_workspace.staging.id
+}
+
+resource "tfe_variable" "aws_region_prod" {
+  key          = "aws_region"
+  value        = var.aws_region
+  category     = "terraform"
+  workspace_id = tfe_workspace.production.id
+}
