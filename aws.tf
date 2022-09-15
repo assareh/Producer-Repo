@@ -40,3 +40,10 @@ resource "aws_subnet" "production" {
     Name = "production"
   }
 }
+
+data "aws_caller_identity" "current" {
+}
+
+output "caller" {
+  value = data.aws_caller_identity.current.arn
+}
