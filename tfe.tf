@@ -303,3 +303,24 @@ resource "tfe_team_access" "app-control" {
     workspace_locking = false
   }
 }
+
+resource "tfe_variable" "role_arn_dev" {
+  key          = "aws_role_arn"
+  value        = var.aws_role_arn
+  category     = "terraform"
+  workspace_id = tfe_workspace.development.id
+}
+
+resource "tfe_variable" "role_arn_stage" {
+  key          = "aws_role_arn"
+  value        = var.aws_role_arn
+  category     = "terraform"
+  workspace_id = tfe_workspace.staging.id
+}
+
+resource "tfe_variable" "role_arn_prod" {
+  key          = "aws_role_arn"
+  value        = var.aws_role_arn
+  category     = "terraform"
+  workspace_id = tfe_workspace.production.id
+}

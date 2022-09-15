@@ -7,6 +7,10 @@ variable "aws_region" {
   default     = "us-west-2"
 }
 
+variable "aws_role_arn" {
+  description = "Amazon Resource Name of the role to be assumed by app workspaces"
+}
+
 variable "hostname" {
   default = "app.terraform.io"
 }
