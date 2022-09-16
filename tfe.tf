@@ -118,6 +118,7 @@ resource "tfe_workspace" "production" {
   tag_names         = [var.use_case_name]
   execution_mode    = "agent"
   agent_pool_id     = data.tfe_agent_pool.aws.id
+  auto_apply        = true
 
   # vcs_repo {
   #   branch         = "main"
